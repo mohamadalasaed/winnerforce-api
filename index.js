@@ -13,7 +13,7 @@ const app = express()
 app.use(bodyParser.json());
 app.use(cors({
   // origin:'http://localhost:4200',
-  origin: 'https://mohamadalasaed.github.io/AngularEmployeeCrudOnline'
+  origin: 'https://mohamadalasaed.github.io'
 }));
 app.use('/api/employees', employeeRoutes);
 app.use(errorHandler);
