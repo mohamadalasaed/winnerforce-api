@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.model('User', {
+module.exports = mongoose.model('Admin', {
     firstname: {
         type: String,
         required: true

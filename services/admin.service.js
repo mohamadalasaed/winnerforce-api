@@ -1,10 +1,24 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Admin = require('../models/admin.model');
 
 let privateKey = process.env.privateKey;
 
 exports.adminMethods = Model => {
     return {
+        getById: id => {
+            return new Promise((resolve, reject) => {
+                Model.findOne({ _id: id })
+                    .then((exists) => {
+                        if (exists) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    })
+            });
+        },
+
         register: (fn, ln, email, password) => {
             return new Promise((resolve, reject) => {
                 Model.findOne({ email: email })
@@ -13,7 +27,7 @@ exports.adminMethods = Model => {
                             reject('Email is already exists')
                         } else {
                             bcrypt.hash(password, 10).then((hashedPasswored) => {
-                                let user = new Model({
+                                let user = new Admin({
                                     firstname: fn,
                                     lastname: ln,
                                     email: email,
@@ -41,8 +55,7 @@ exports.adminMethods = Model => {
                         } else {
                             bcrypt.compare(password, user.password).then((same) => {
                                 if (same) {
-                                    let fullname = user.firstname + user.lastname;
-                                    let token = jwt.sign({ id: user._id, fullname: fullname, role: 'admin' }, privateKey, {
+                                    let token = jwt.sign({ id: user._id, role: 'admin' }, privateKey, {
                                         expiresIn: '1h'
                                     })
                                     resolve({ token: token })
