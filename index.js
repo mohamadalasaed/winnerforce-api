@@ -20,8 +20,8 @@ const app = express()
 //middlewares
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:4200',
-  // origin: 'https://mohamadalasaed.github.io'
+  // origin: 'http://localhost:4200',
+  origin: 'https://mohamadalasaed.github.io'
 }));
 app.use('/api/product', productRoutes);
 app.use('/api/category', categoryRoutes);
